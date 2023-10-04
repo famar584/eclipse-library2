@@ -1,8 +1,9 @@
-import CardLivro from '@/components/CardLivro'
+import CardFilme from '@/components/CardFilme'
+import NavBar from '@/components/NavBar'
 import Title from '@/components/Title'
 
-async function carregarLivros(){
-  const url = "https://api.nytimes.com/svc/books/v3/lists.json?list-name=hardcover-fiction&api-key=5SEsP8gGIdZCLwqjbiUetqgSxVx3LVhW"
+async function carregarFilmes(){
+  const url = "https://api.themoviedb.org/3/trending/movie/week?api_key=1e922667481ab207d642450b0efb461e&language=pt-br"
   const resposta = await fetch(url)
   const json = await resposta.json()
   return json.results
@@ -10,27 +11,17 @@ async function carregarLivros(){
 
 export default async function Home() {
   
-  const livros = await carregarLivros()
+  
+  const filmes = await carregarFilmes()
 
   return ( //JSX
     <>
-      <nav className="bg-slate-900 p-4">
-        <ul>
-          <li><a href="#"><h1 className="text-3xl font-bold">Eclipse LIbrary</h1></a></li>
-        </ul>
-        <ul>
-          <li><a href="#">favoritos</a></li>
-        </ul>
-        <ul>
-          <li><a href="#">livros</a></li>
-        </ul>
-        
-      </nav>
+     <NavBar />
 
-     <Title>populares</Title>
+     <Title>em alta</Title>
 
       <section className='flex flex-wrap'>
-        {livros.map(livro => <CardLivro livro={livro} /> )}
+        {filmes.map(filme => <CardFilme filme={filme} /> )}
       </section>
 
      <Title>lançamentos</Title>
